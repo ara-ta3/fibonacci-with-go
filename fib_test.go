@@ -10,8 +10,9 @@ func Test_Fib(t *testing.T) {
 	}
 }
 
-func Bench_Fib(b *testing.B) {
+func Benchmark_Fib(b *testing.B) {
+	f := Fib{}
 	for i := 0; i < b.N; i++ {
-		_ := f.Calculate(10)
+		f.Calculate(10)
 	}
 }
