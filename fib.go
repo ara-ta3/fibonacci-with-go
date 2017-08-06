@@ -10,12 +10,16 @@ func main() {
 	if n < 0 {
 		log.Fatalf("%#v", fmt.Errorf("Only positive number is allowed"))
 	}
-	f := Fib{}
+	f := Fib{
+		cache: map[int]int{},
+	}
 	x := f.Calculate(n)
 	fmt.Printf("Fibonacci for %d is %d", n, x)
 }
 
-type Fib struct{}
+type Fib struct {
+	cache map[int]int
+}
 
 func (f Fib) Calculate(n int) int {
 	if n <= 0 {
@@ -26,5 +30,11 @@ func (f Fib) Calculate(n int) int {
 		return 1
 	}
 
-	return f.Calculate(n-1) + f.Calculate(n-2)
+	x, ok := f.cache[n]
+	if ok {
+		return x
+	}
+	y := f.Calculate(n-1) + f.Calculate(n-2)
+	f.cache[n] = y
+	return y
 }
